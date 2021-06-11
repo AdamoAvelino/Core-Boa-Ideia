@@ -96,6 +96,10 @@ class User extends Authenticatable
      */
     public function hasManyRules($roles)
     {
+        if(is_string($roles)) {
+            return $this->roles->contains('name', $roles);
+        }
+
         if (is_array($roles) or is_object($roles)) {
             foreach ($roles as $role) {
                 if ($this->roles->contains('name', $role->name)) {
@@ -110,13 +114,20 @@ class User extends Authenticatable
     {
         $autenticado = auth()->user();
         $user = self::find($id);
-        $view = (
-            $autenticado->can('anyView', $user) or
-            $autenticado->can('viewUserCoordenador', $user) or
-            $autenticado->can('viewUserAdmin', $user) or
-            $autenticado->can('viewUserSelf', $user)
+        $root_or_yourSelf = (
+            $autenticado->can('viewUserSelf', $user) or 
+            $autenticado->hasManyRules('Root')
         );
-        if ($view) {
+        $profiles_produces = (
+            $user->hasProduces($autenticado->produces) and 
+            (
+                $autenticado->hasManyRules('Admin') or
+                $autenticado->hasManyRules('Coordenador') or
+                $autenticado->hasManyRules('Revisor')
+            )
+        );
+        
+        if ($profiles_produces or $root_or_yourSelf) {
             return $user;
         }
         return false;
@@ -139,31 +150,27 @@ class User extends Authenticatable
 
         $users = self::getQuerySelect();
 
+        if($autenticado->hasManyRules('Root')) {
+            return $users->groupBy('users.id')->get();
+        }
+
         // Coordenador pode listar usuarios editores e/ou revesores da própria produtora.
-        if ($autenticado->can('anyView', $autenticado)) {
-            $users = $users->groupBy('users.id')->get();
-            return $users;
-        } elseif ($autenticado->can('viewUserCoordenador', $autenticado)) {
-            // dd('coor');
-            $users = $users->whereIn('roles.id', [1, 2, 3])
+        if ($autenticado->can('view', $autenticado)) {
+            if ($autenticado->hasManyRules('Coordenador')) {
+                // dd('coor');
+                $users = $users->whereIn('roles.id', [1, 2, 3]);
+                // Admin pode listar todos os usuários de sua produtora
+            } elseif ($autenticado->hasManyRules('Revisor')) {
+                $users = $users->whereIn('roles.id', [1, 2]);
+            } 
+
+            $users = $users->groupBy('users.id')
             ->whereIn('user_produce.produce_id', $produtora)
-            ->groupBy('users.id')->get();
-
-            return $users;
-            
-        // Admin pode listar todos os usuários de sua produtora
-        } elseif ($autenticado->can('viewUserAdmin', $autenticado)) {
-            $users = $users->whereIn('user_produce.produce_id', $produtora)->groupBy('users.id')->get();
-            return $users;
-
-        // Revisores e Editodores só podem ver seu perfil
-        } elseif ($autenticado->can('viewUserSelf', $autenticado)) {
-            $users = $users->where('users.id', $autenticado->id)
-            ->groupBy('users.id')
             ->get();
-
             return $users;
         }
+
+        return false; 
     }
 
     /**

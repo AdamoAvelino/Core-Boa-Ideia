@@ -36,11 +36,13 @@
                             <i class="fas fa-tachometer-alt"></i> DashBoard
                         </a>
                     </li>
+                    @can('view', Auth::user())
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/admin/sections/usuario') }}">
                             <i class="fas fa-users"></i> Usuários
                         </a>
                     </li>
+                    @endcan
                     <li class="nav-item">
                         <a class="nav-link" href="{{ url('/admin/sections/post') }}">
                             <i class="fas fa-newspaper"></i> Posts

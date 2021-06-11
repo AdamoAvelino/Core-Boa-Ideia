@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-@can('update', $user)
+@if(Auth::user()->can('update', $user) or Auth::user()->can('viewUserSelf', $user))
     <div class="container">
         <form action="{{ route('admin.user.delete', $user->id) }}" id="delete" method='post'>
             {{ csrf_field() }}
@@ -30,5 +30,5 @@
             </fieldset>
         </form>
     </div>
-@endcan
+@endif
 @endsection

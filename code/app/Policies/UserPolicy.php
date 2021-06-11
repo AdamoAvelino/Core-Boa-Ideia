@@ -22,61 +22,59 @@ class UserPolicy
     /**
      * ----------------------------------------------------------------------------------
      */
-    public function anyView(User $user, User $model)
-    {
-        // return $user->hasPermission($user->roles, 'user_view') and $this->getRule($user, $model);
-        return $user->hasPermission($user->roles, 'user_view_any');
-    }
+    // public function anyView(User $user, User $userAutenticado)
+    // {
+    //     // return $user->hasPermission($user->roles, 'user_view') and $this->getRule($user, $userAutenticado);
+    //     return $user->hasPermission($user->roles, 'user_view_any');
+    // }
     /**
      * ----------------------------------------------------------------------------------
      */
-    public function viewUserCoordenador(User $user, User $model)
+    public function viewUserCoordenador(User $user, User $userAutenticado)
     {
+        
         $coordenador = $user->hasPermission($user->roles, 'user_view_coordenador');
         $rolePermission = true;
         $producePermission = true;
-        
-        if ($model) {
+
+        if ($userAutenticado) {
             $rolePermission = false;
             $producePermission = false;
             
             
-            $rolePermission = $model->roles->contains(function ($value, $key) {
+            $rolePermission = $userAutenticado->roles->contains(function ($value, $key) {
                 return in_array($value->id, [1, 2, 3]);
             });
-
-            $producePermission = $this->producePermission($user, $model);
+            
+            $producePermission = $this->producePermission($user, $userAutenticado);
         }
-        // dd($coordenador and $rolePermission and $producePermission);
-        // dd($rolePermission);
-        // dd($producePermission);
+
         return $coordenador and $rolePermission and $producePermission;
     }
     /**
      * ----------------------------------------------------------------------------------
      */
-    public function viewUserAdmin(User $user, User $model)
+    public function viewUserAdmin(User $user, User $userAutenticado)
     {
         $permissionAdmin = $user->hasPermission($user->roles, 'user_view_admin');
-        $producePermission = $this->producePermission($user, $model);
+        $producePermission = $this->producePermission($user, $userAutenticado);
         return $permissionAdmin and $producePermission;
     }
     /**
      * ----------------------------------------------------------------------------------
      */
-    public function viewUserSelf(User $user, User $model)
+    public function viewUserSelf(User $user, User $userAutenticado)
     {
-        $viewPerfil = $user->hasPermission($user->roles, 'user_view_self');
-        $perfil = $user->id == $model->id;
-        return $perfil and $viewPerfil;
+        // $viewPerfil = $user->hasPermission($user->roles, 'user_view_self');
+        return $user->id == $userAutenticado->id;
     }
     /**
      * ----------------------------------------------------------------------------------
      * Apenas usuários donos de deu perfíl podem inativar perfíl
      */
-    public function updateActive(User $user, User $model)
+    public function updateActive(User $user, User $userAutenticado)
     {
-        return $user->id == $model->id;
+        return $user->id == $userAutenticado->id;
     }
 
     /**
@@ -104,12 +102,12 @@ class UserPolicy
      * Determine whether the user can update the model.
      *
      * @param \App\User $user
-     * @param \App\User $model
+     * @param \App\User $userAutenticado
      * @return mixed
      */
-    public function update(User $user, User $model)
+    public function update(User $user, User $userAutenticado)
     {
-        return $user->hasPermission($user->roles, 'user_edit') and $this->getRule($user, $model);
+        return $user->hasPermission($user->roles, 'user_edit') and $this->getRule($user, $userAutenticado);
     }
 
     /**
@@ -117,12 +115,12 @@ class UserPolicy
      * Determine whether the user can delete the model.
      *
      * @param \App\User $user
-     * @param \App\User $model
+     * @param \App\User $userAutenticado
      * @return mixed
      */
-    public function delete(User $user, User $model)
+    public function delete(User $user, User $userAutenticado)
     {
-        return $user->hasPermission($user->roles, 'user_delete') and $this->getRule($user, $model);
+        return $user->hasPermission($user->roles, 'user_delete') and $this->getRule($user, $userAutenticado);
     }
 
     /**
@@ -138,13 +136,13 @@ class UserPolicy
         }
     }
 
-    private function producePermission($user, $model)
+    private function producePermission($user, $userAutenticado)
     {
         $produtorasUser = $user->produces->map(function ($produtora) {
             return $produtora->id;
         });
 
-        $producePermission = $model->produces->contains(function ($value, $key) use ($produtorasUser) {
+        $producePermission = $userAutenticado->produces->contains(function ($value, $key) use ($produtorasUser) {
             return in_array($value->id, $produtorasUser->toArray());
         });
 
@@ -154,19 +152,19 @@ class UserPolicy
     /**
      * ----------------------------------------------------------------------------------
      * @param User $user
-     * @param User $model
+     * @param User $userAutenticado
      * @return bool
      */
-    private function getRule(User $user, User $model)
+    private function getRule(User $user, User $userAutenticado)
     {
         $retorno = false;
 
         if ($user->hasManyRules('Revisor') or $user->hasManyRules('Editor')) {
-            $retorno = $user->id == $model->id;
+            $retorno = $user->id == $userAutenticado->id;
         }
 
         if ($user->hasManyRules('Admin') or $user->hasManyRules('Coordenador')) {
-            $retorno = $user->hasProduces($model->produces);
+            $retorno = $user->hasProduces($userAutenticado->produces);
         }
 
         return $retorno;

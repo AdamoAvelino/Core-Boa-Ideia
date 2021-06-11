@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-@can('view', $user)
 <article class="container mt-4">
     <fieldset class='position-relative shadow mt-5 py-2 px-4 border border-warning rounded'>
         <legend class='form-legend d-inline position-absolute' style='width:60%'>
@@ -48,9 +47,11 @@
         </section>
         <section class='col-md-8'>
             <p class="text-right">
+                @can('user_view')
                 <a class='btn btn-info btn-sm' href="{{route('admin.user.index')}}">
                     Listar <i class="fas fa-list"></i>
                 </a>
+                @endcan
                 <a class='btn btn-primary btn-sm' href="{{route('admin.user.edit', $user->id)}}">
                     Alterar <i class="fas fa-edit"></i>
                 </a>
@@ -91,5 +92,4 @@
     </div>
 </fieldset>
 </article>
-@endcan
 @endsection

@@ -38,7 +38,7 @@ class UserController extends Controller
         $user = User::getUser($id);
         if (!$user) {
             session()->flash('error', 'Nenhum Usuário Encontrado');
-            return redirect()->route('admin.user.index');
+            return redirect()->route('home');
         }
         return view('admin.user.show', compact('user'));
     }
