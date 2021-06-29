@@ -24,7 +24,7 @@
             @endcan
             @can('view', App\Models\Admin\Role::class)
             <div class="col-md-3">
-                <div class="card bg-warning text-white">
+                <div class="card bg-primary text-white">
                     <div class="card-header text-right">
                         <a href="{{ url('/admin/role') }}" class='label label-warning section'
                            style='display: inline-block'>
@@ -44,7 +44,7 @@
             </div>
             @endcan
             <div class="col-md-3">
-                <div class="card bg-success text-white">
+                <div class="card bg-primary text-white">
                     <div class="card-header text-right">
                         <a href="{{ url('/admin/permission') }}" class='label label-success section'
                            style='display: inline-block'>
@@ -63,7 +63,7 @@
                 </div>
             </div>
             <div class="col-md-3">
-                <div class="card bg-danger text-white">
+                <div class="card bg-primary text-white">
                     <div class="card-header text-right">
                         <a href='{{ url("/admin/modulo") }}' class='label label-danger section'
                            style='display: inline-block'>

@@ -4,7 +4,7 @@
 <section class="container-fluid mt-5">
     <div class="row">
         <div class="col-md-3">
-            <div class="card bg-danger text-white">
+            <div class="card bg-primary text-white">
                 <div class="card-header text-right">
                     <a href='{{ url("/admin/account") }}' class='label label-danger section' style='display: inline-block'>
                         Ver Contas
@@ -23,7 +23,7 @@
         </div>
 
         <div class="col-md-3">
-            <div class="card bg-warning text-white">
+            <div class="card bg-primary text-white">
                 <div class="card-header text-right">
                     <a href='{{ url("/admin/account_class") }}' class='label label-danger section' style='display: inline-block'>
                         Ver Classes de Contas
@@ -41,7 +41,7 @@
             </div>
         </div>
         <div class="col-md-3">
-            <div class="card bg-success text-white">
+            <div class="card bg-primary text-white">
                 <div class="card-header text-right">
                     <a class="section" href='{{ url("/admin/produce") }}' style='display: inline-block'>
                         Ver Produtoras

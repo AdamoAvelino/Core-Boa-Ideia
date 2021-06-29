@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 <article class="container mt-4">
-    <fieldset class='position-relative shadow mt-5 py-2 px-4 border border-warning rounded'>
+    <fieldset class='position-relative shadow mt-5 py-2 px-4 border border-primary rounded'>
         <legend class='form-legend d-inline position-absolute' style='width:60%'>
-            <span class='p-2 bg-warning text-white shadow rounded'>{{ $user->name }}</span>
+            <span class='p-2 bg-primary text-white shadow rounded'>{{ $user->name }}</span>
         </legend>
         <div class="row">
             @include('layouts.message')

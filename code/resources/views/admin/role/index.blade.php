@@ -3,7 +3,7 @@
 
 <div class="container-fluid">
  <h3 class='text-center mt-1'> 
-  <span class="badge badge-info">{{$roles->count()}}</span> Perfís 
+  <span class="badge badge-primary">{{$roles->count()}}</span> Perfís 
  </h3>
 <a href="{{url("/admin/role/create")}}" class="btn btn-success btn-sm">
   <i class="fas fa-plus-square"></i>

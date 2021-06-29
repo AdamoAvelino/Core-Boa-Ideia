@@ -4,7 +4,7 @@
     <section class="row">
         <article class="col-md-12">
             <h3 class='text-center mt-1'>
-                <span class="badge badge-info">{{$users->count()}}</span> Usuários
+                <span class="badge badge-primary">{{$users->count()}}</span> Usuários
             </h3>
             @include('layouts.message')
             @can('create', App\User::class)

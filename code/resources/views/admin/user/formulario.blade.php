@@ -114,7 +114,7 @@
         <h5 class='mt-2'>Perfis</h5>
         @forelse($roles as $role)
         <div class="custom-control custom-switch d-inline">
-            <input type="checkbox" value='{{$role->id}}' @isset($user->roles)@statusCheck($user->hasManyRules($role->name))@endisset
+            <input type="checkbox" value='{{$role->id}}' @isset($user->roles)@statusCheck($user->hasManyRoles($role->name))@endisset
             name='perfis[{{$role->name}}]' class="custom-control-input" id="role_{{$role->id}}">
             <label class="custom-control-label" for="role_{{$role->id}}">{{$role->name}}</label> |
         </div>

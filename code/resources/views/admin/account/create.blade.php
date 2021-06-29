@@ -2,9 +2,9 @@
 @section('content')
   <section class="container">
     <form class="form-group" method='post' action="{{ route('admin.account.save') }}">
-      <fieldset class='position-relative shadow mt-5 py-2 px-3 border border-success rounded'>
+      <fieldset class='position-relative shadow mt-5 py-2 px-3 border border-primary rounded'>
         <legend class='form-legend d-inline position-absolute' style='width:60%'>
-          <span class='p-2 bg-success text-white shadow rounded'>Criar Conta</span>
+          <span class='p-2 bg-primary text-white shadow rounded'>Criar Conta</span>
         </legend>
         {{ csrf_field() }}
         @include('admin.account.formulario')

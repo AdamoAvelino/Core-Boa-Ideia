@@ -20,7 +20,7 @@
 <body>
 <div id="app">
     @auth
-        <nav class="navbar navbar-expand-sm navbar-dark bg-info">
+        <nav class="navbar navbar-expand-sm navbar-dark bg-primary">
             <a class="navbar-brand" href="{{ url('/') }}">
                 {{ config('app.name', 'Laravel') }}
             </a>
@@ -59,7 +59,7 @@
     @endauth
     @yield('content')
     <div class='mb-5'></div>
-    <div class="bg-primary navbar-light fixed-bottom">
+    <div class="bg-secondary navbar-light fixed-bottom">
         <div class="container d-flex justify-content-end">
             <!-- Right Side Of Navbar -->
             <ul class="navbar nav nav-top">

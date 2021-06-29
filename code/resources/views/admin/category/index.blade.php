@@ -2,7 +2,7 @@
 @section('content')
 <section class="container-fluid">
   <h3 class='text-center'>
-      <span class="badge badge-info mt-1">{{$categorys->count()}}</span> Categorias
+      <span class="badge badge-primary mt-1">{{$categorys->count()}}</span> Categorias
   </h3>
   @include('layouts.message')
   <a href="{{url("/admin/category/create")}}" class="btn btn-success btn-sm">

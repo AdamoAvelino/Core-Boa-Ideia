@@ -3,9 +3,9 @@
 @section('content')
     <div class="container">
         <form action="{{ route('admin.user.save') }}" enctype="multipart/form-data" method='post'>
-            <fieldset class='position-relative shadow mt-5 py-2 px-5 border border-success rounded'>
+            <fieldset class='position-relative shadow mt-5 py-2 px-5 border border-primary rounded'>
                 <legend class='form-legend d-inline position-absolute' style='width:60%'>
-                    <span class='p-2 bg-success text-white shadow rounded'>Criar Usuário</span>
+                    <span class='p-2 bg-primary text-white shadow rounded'>Criar Usuário</span>
                 </legend>
                 {{ csrf_field() }}
 

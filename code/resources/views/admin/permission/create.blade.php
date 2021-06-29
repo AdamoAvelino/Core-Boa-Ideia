@@ -2,9 +2,9 @@
 @section('content')
   <section class="container">
     <form class="form-group" method='post' action="{{ route('admin.permission.save') }}">
-      <fieldset class='position-relative shadow mt-5 mt-5 px-3 py-2 border border-success'>
+      <fieldset class='position-relative shadow mt-5 mt-5 px-3 py-2 border border-primary'>
         <legend class='form-legend d-inline position-absolute' style='width:60%'>
-          <span class='p-2 bg-success text-white shadow'>Criar Permissão</span>
+          <span class='p-2 bg-primary text-white shadow'>Criar Permissão</span>
         </legend>
         {{ csrf_field() }}
         @include('admin.permission.formulario')

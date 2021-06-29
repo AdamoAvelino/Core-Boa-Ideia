@@ -2,7 +2,7 @@
 @section('content')
 <div class="container-fluid">
     <h3 class='text-center mt-1'>
-        <span class="badge badge-info">{{$permissions->count()}}</span> Permissões
+        <span class="badge badge-primary">{{$permissions->count()}}</span> Permissões
     </h3>
     @include('layouts.message')
     <a href="{{url("/admin/permission/create")}}" class="btn btn-success btn-sm">

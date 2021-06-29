@@ -8,9 +8,9 @@
         </form>
 
         <form action="{{ route('admin.user.update', $user->id) }}" enctype="multipart/form-data" method='post'>
-            <fieldset class='position-relative shadow mt-5 py-2 px-4 border border-info'>
+            <fieldset class='position-relative shadow mt-5 py-2 px-4 border border-primary'>
                 <legend class='form-legend d-inline position-absolute' style='width:60%'>
-                    <span class='p-2 bg-info text-white shadow'>Editar Usuário</span>
+                    <span class='p-2 bg-primary text-white shadow'>Editar Usuário</span>
                 </legend>
                 {{ csrf_field() }}
                 {{ method_field('PUT') }}

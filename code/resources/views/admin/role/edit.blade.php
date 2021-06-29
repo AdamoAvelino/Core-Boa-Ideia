@@ -7,9 +7,9 @@
     </form>
 
     <form class="form-group" method='post' action='{{ route("admin.role.update", $role->id)}}'>
-      <fieldset class='position-relative shadow mt-5 py-2 px-3 border border-info rounded'>
+      <fieldset class='position-relative shadow mt-5 py-2 px-3 border border-primary rounded'>
         <legend class='form-legend d-inline position-absolute' style='width:60%'>
-          <span class='p-2 bg-info shadow text-white rounded'>Editar Perfil</span>
+          <span class='p-2 bg-primary shadow text-white rounded'>Editar Perfil</span>
         </legend>
           {{ csrf_field() }}
           {{ method_field('PUT') }}

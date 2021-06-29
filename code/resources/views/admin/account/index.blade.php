@@ -2,7 +2,7 @@
 @section('content')
 <section class="container-fluid">
   <h3 class='text-center'>
-      <span class="badge badge-info mt-1">{{$accounts->count()}}</span> Contas
+      <span class="badge badge-primary mt-1">{{$accounts->count()}}</span> Contas
   </h3>
   @include('layouts.message')
   <a href="{{url("/admin/account/create")}}" class="btn btn-success btn-sm">

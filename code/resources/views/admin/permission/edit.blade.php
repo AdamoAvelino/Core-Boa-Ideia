@@ -7,9 +7,9 @@
     </form>
 
     <form class="form-group" method='post' action='{{ route("admin.permission.update", $permission->id)}}'>
-      <fieldset class='position-relative shadow mt-5 px-3 py-2 border border-info'>
+      <fieldset class='position-relative shadow mt-5 px-3 py-2 border border-primary'>
         <legend class='form-legend d-inline position-absolute' style='width:60%'>
-          <span class='p-2 bg-info text-white shadow'>Editar Permissões</span>
+          <span class='p-2 bg-primary text-white shadow'>Editar Permissões</span>
         </legend>
         {{ csrf_field() }}
         {{ method_field('PUT') }}

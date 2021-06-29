@@ -2,7 +2,7 @@
 @section('content')
 <section class="container-fluid">
   <h3 class='text-center'>
-      <span class="badge badge-info mt-1">{{$editorials->count()}}</span> Editorial
+      <span class="badge badge-primary mt-1">{{$editorials->count()}}</span> Editorial
   </h3>
   @include('layouts.message')
   <a href="{{url("/admin/editorial/create")}}" class="btn btn-success btn-sm">
