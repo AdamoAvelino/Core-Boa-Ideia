@@ -1,11 +1,11 @@
 version: "3.0"
 services:
   app-apache:
-    build: .
+    build: ./core
     ports:
       - "8080:8080"
     volumes:
-      - ./code:/var/www/html
+      - ./core/code:/var/www/html
     depends_on:
       - app-mysql
 
