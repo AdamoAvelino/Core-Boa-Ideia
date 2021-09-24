@@ -94,7 +94,7 @@ class User extends Authenticatable
      * @param  Collection  $roles Coleção de Role
      * @return boolean
      */
-    public function hasManyRules($roles)
+    public function hasManyRoles($roles)
     {
         if(is_string($roles)) {
             return $this->roles->contains('name', $roles);
@@ -110,20 +110,27 @@ class User extends Authenticatable
         return $this->roles->contains('name', $roles);
     }
 
+    /**
+     * -------------------------------------------------------------------------------------
+     */
     public static function getUser($id)
     {
         $autenticado = auth()->user();
-        $user = self::find($id);
+
+        $user = self::with('produces')
+            ->with('roles')
+            ->find($id);
+
         $root_or_yourSelf = (
             $autenticado->can('viewUserSelf', $user) or 
-            $autenticado->hasManyRules('Root')
+            $autenticado->hasManyRoles('Root')
         );
         $profiles_produces = (
             $user->hasProduces($autenticado->produces) and 
             (
-                $autenticado->hasManyRules('Admin') or
-                $autenticado->hasManyRules('Coordenador') or
-                $autenticado->hasManyRules('Revisor')
+                $autenticado->hasManyRoles('Admin') or
+                $autenticado->hasManyRoles('Coordenador') or
+                $autenticado->hasManyRoles('Revisor')
             )
         );
         
@@ -150,17 +157,17 @@ class User extends Authenticatable
 
         $users = self::getQuerySelect();
 
-        if($autenticado->hasManyRules('Root')) {
+        if($autenticado->hasManyRoles('Root')) {
             return $users->groupBy('users.id')->get();
         }
 
-        // Coordenador pode listar usuarios editores e/ou revesores da própria produtora.
+        // Coordenador pode listar usuarios editores e/ou revisores da própria produtora.
         if ($autenticado->can('view', $autenticado)) {
-            if ($autenticado->hasManyRules('Coordenador')) {
+            if ($autenticado->hasManyRoles('Coordenador')) {
                 // dd('coor');
                 $users = $users->whereIn('roles.id', [1, 2, 3]);
                 // Admin pode listar todos os usuários de sua produtora
-            } elseif ($autenticado->hasManyRules('Revisor')) {
+            } elseif ($autenticado->hasManyRoles('Revisor')) {
                 $users = $users->whereIn('roles.id', [1, 2]);
             } 
 

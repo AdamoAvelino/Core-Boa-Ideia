@@ -14,7 +14,7 @@ class RolePolicy
      */
     public function before(User $user, $ability)
     {
-        if ($user->hasManyRules('Root')) {
+        if ($user->hasManyRoles('Root')) {
             return true;
         }
     }

@@ -53,17 +53,20 @@ class UserController extends Controller
     public function edit($id)
     {
         $user = User::getUser($id);
+
         if (!$user) {
             session()->flash('error', 'Usuário Não Encontrado');
             return redirect()->route('admin.user.index');
         }
         $roles = Role::all();
         $produces = false;
-        if (auth()->user()->hasManyRules('Root')) {
-            $produces = Produce::all();
-        } elseif (auth()->user()->hasManyRules('Revisor') or auth()->user()->hasManyRules('Coordenador') or auth()->user()->hasManyRules('Admin')) {
-            $produces = auth()->user()->produces;
-        }
+        $produces = Produce::all();
+        
+        // if (auth()->user()->hasManyRoles('Root')) {
+        // } elseif (auth()->user()->hasManyRoles('Revisor') or auth()->user()->hasManyRoles('Coordenador') or auth()->user()->hasManyRoles('Admin')) {
+        //     $produces = auth()->user()->produces;
+        // }
+
         return view('admin.user.edit', compact('user', 'roles', 'produces'));
     }
 
@@ -83,9 +86,9 @@ class UserController extends Controller
         $roles = Role::all();
         $produces = false;
         
-        if (auth()->user()->hasManyRules('Root')) {
+        if (auth()->user()->hasManyRoles('Root')) {
             $produces = Produce::all();
-        } elseif (auth()->user()->hasManyRules('Coordenador') or auth()->user()->hasManyRules('Admin')) {
+        } elseif (auth()->user()->hasManyRoles('Coordenador') or auth()->user()->hasManyRoles('Admin')) {
             $produces = auth()->user()->produces;
         }
         return view('admin.user.create', compact('roles', 'produces'));
@@ -149,7 +152,7 @@ class UserController extends Controller
             $user->photo = $request->photo->store('public');
         }
         
-        if (auth()->user()->can('updateActive', $user)) {
+        if ($this->autorize('updateActive', $user)) {
             $user->active = isset($request->active) ? $request->active : 0;
         }
 
